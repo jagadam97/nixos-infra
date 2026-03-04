@@ -14,7 +14,7 @@
 
     # Terraform Cloud backend
     cloud = {
-      organization = "your-org-name"; # Set via TFC_ORGANIZATION env var or override
+      organization = "jagadam97";
 
       workspaces = {
         name = "nixos-infra-\${var.environment}";
