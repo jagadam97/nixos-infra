@@ -65,7 +65,8 @@
         "started": true,
         "tags": [
           "influxdb",
-          "monitoring"
+          "monitoring",
+          "test"
         ],
         "unprivileged": true,
         "vm_id": 104
