@@ -58,7 +58,7 @@
 
     # Memory
     memory = {
-      dedicated = 512;
+      dedicated = 712;
     };
 
     # Network interface
