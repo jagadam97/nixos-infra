@@ -42,13 +42,11 @@
         "mount_point": [
           {
             "path": "/var/lib/influxdb2",
-            "size": "10G",
-            "volume": "${var.storage}"
+            "volume": "/mnt/pve/bx500/influxdb/data"
           },
           {
             "path": "/etc/influxdb2",
-            "size": "1G",
-            "volume": "${var.storage}"
+            "volume": "/mnt/pve/bx500/influxdb/config"
           }
         ],
         "network_interface": {
