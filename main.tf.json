@@ -37,7 +37,7 @@
           ]
         },
         "memory": {
-          "dedicated": 512
+          "dedicated": 712
         },
         "mount_point": [
           {
@@ -65,10 +65,11 @@
         "started": true,
         "tags": [
           "influxdb",
-          "monitoring"
+          "monitoring",
+          "test"
         ],
         "unprivileged": true,
-        "vm_id": 104
+        "vm_id": 204
       }
     },
     "proxmox_virtual_environment_download_file": {

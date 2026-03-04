@@ -23,7 +23,7 @@
   # InfluxDB container
   resource.proxmox_virtual_environment_container.influxdb = {
     node_name = "\${var.proxmox_node}";
-    vm_id = 104;
+    vm_id = 204;
 
     # Template
     operating_system = {
@@ -58,7 +58,7 @@
 
     # Memory
     memory = {
-      dedicated = 512;
+      dedicated = 712;
     };
 
     # Network interface
@@ -92,7 +92,7 @@
     start_on_boot = true;
 
     # Tags
-    tags = [ "influxdb" "monitoring" ];
+    tags = [ "influxdb" "monitoring" "test" ];
 
     # Unprivileged container
     unprivileged = true;
