@@ -1,9 +1,10 @@
 {
   "provider": {
     "proxmox": {
-      "api_token": "${var.proxmox_api_token}",
       "endpoint": "${var.proxmox_api_url}",
-      "insecure": true
+      "insecure": true,
+      "password": "${var.proxmox_password}",
+      "username": "${var.proxmox_username}"
     }
   },
   "resource": {
@@ -97,11 +98,6 @@
     "required_version": ">= 1.0.0"
   },
   "variable": {
-    "proxmox_api_token": {
-      "description": "Proxmox API token (format: user@realm!tokenid=secret)",
-      "sensitive": true,
-      "type": "string"
-    },
     "proxmox_api_url": {
       "description": "Proxmox API URL",
       "sensitive": true,
@@ -109,6 +105,16 @@
     },
     "proxmox_node": {
       "default": "donnager",
+      "type": "string"
+    },
+    "proxmox_password": {
+      "description": "Proxmox password",
+      "sensitive": true,
+      "type": "string"
+    },
+    "proxmox_username": {
+      "description": "Proxmox username (e.g., root@pam)",
+      "sensitive": true,
       "type": "string"
     },
     "storage": {

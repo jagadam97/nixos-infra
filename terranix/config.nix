@@ -30,9 +30,15 @@
       sensitive = true;
     };
 
-    proxmox_api_token = {
+    proxmox_username = {
       type = "string";
-      description = "Proxmox API token (format: user@realm!tokenid=secret)";
+      description = "Proxmox username (e.g., root@pam)";
+      sensitive = true;
+    };
+
+    proxmox_password = {
+      type = "string";
+      description = "Proxmox password";
       sensitive = true;
     };
   };
@@ -40,7 +46,8 @@
   # Proxmox provider (bpg/proxmox)
   provider.proxmox = {
     endpoint = "\${var.proxmox_api_url}";
-    api_token = "\${var.proxmox_api_token}";
+    username = "\${var.proxmox_username}";
+    password = "\${var.proxmox_password}";
     insecure = true;
   };
 }
