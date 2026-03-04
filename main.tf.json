@@ -37,7 +37,7 @@
           ]
         },
         "memory": {
-          "dedicated": 512
+          "dedicated": 712
         },
         "mount_point": [
           {
