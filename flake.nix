@@ -12,7 +12,10 @@
   outputs = { self, nixpkgs, terranix }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
 
       # Generate Terraform JSON from Terranix config
       terraformConfigPath = terranix.lib.terranixConfiguration {
