@@ -5,17 +5,12 @@
 *.tfvars
 .terraform.lock.hcl
 
-# Terragrunt
-.terragrunt-cache/
-
 # Nix
 result
 result-*
-generated-dev
-generated-prod
 
-# Generated configs (we regenerate them)
-environments/*/main.tf.json
+# Generated config
+main.tf.json
 
 # Editor
 *.swp

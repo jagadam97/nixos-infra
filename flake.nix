@@ -1,5 +1,5 @@
 {
-  description = "NixOS Infrastructure as Code with Terranix and Terragrunt";
+  description = "NixOS Infrastructure as Code with Terranix";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -14,29 +14,21 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
 
-      # Helper to generate Terraform JSON from Terranix config
-      mkTerraformConfig = environment:
-        terranix.lib.terranixConfiguration {
-          inherit system;
-          modules = [
-            ./terranix/config.nix
-            ./terranix/environments/${environment}.nix
-          ];
-        };
+      # Generate Terraform JSON from Terranix config
+      terraformConfig = terranix.lib.terranixConfiguration {
+        inherit system;
+        modules = [
+          ./terranix/config.nix
+          ./terranix/containers.nix
+        ];
+      };
     in
     {
-      # Generate Terraform configs for each environment
+      # Generate Terraform config
       packages.${system} = {
-        dev = mkTerraformConfig "dev";
-        prod = mkTerraformConfig "prod";
-
-        # Default package generates all configs
-        default = pkgs.symlinkJoin {
-          name = "terraform-configs";
-          paths = [
-            (pkgs.writeTextDir "environments/dev/main.tf.json" (builtins.toJSON (mkTerraformConfig "dev")))
-            (pkgs.writeTextDir "environments/prod/main.tf.json" (builtins.toJSON (mkTerraformConfig "prod")))
-          ];
+        default = pkgs.writeTextFile {
+          name = "main.tf.json";
+          text = builtins.toJSON terraformConfig;
         };
       };
 
@@ -45,28 +37,19 @@
         buildInputs = with pkgs; [
           terranix.packages.${system}.default
           terraform
-          terragrunt
           jq
         ];
       };
 
-      # Apps for convenience
-      apps.${system} = {
-        generate = {
-          type = "app";
-          program = toString (pkgs.writeShellScript "generate" ''
-            echo "Generating Terraform configs..."
-            mkdir -p environments/dev environments/prod
-
-            nix build .#dev --out-link generated-dev
-            cp -L generated-dev/* environments/dev/main.tf.json 2>/dev/null || true
-
-            nix build .#prod --out-link generated-prod
-            cp -L generated-prod/* environments/prod/main.tf.json 2>/dev/null || true
-
-            echo "Done! Generated configs in environments/*/"
-          '');
-        };
+      # App to generate config
+      apps.${system}.generate = {
+        type = "app";
+        program = toString (pkgs.writeShellScript "generate" ''
+          echo "Generating Terraform config..."
+          nix build . --out-link result
+          cp -L result main.tf.json
+          echo "Done! Generated main.tf.json"
+        '');
       };
     };
 }

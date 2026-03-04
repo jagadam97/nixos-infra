@@ -1,16 +1,13 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Set environment variable
-  variable.environment.default = "dev";
-
-  # Proxmox node for dev environment
+  # Proxmox node
   variable.proxmox_node = {
     type = "string";
     default = "donnager";
   };
 
-  # Storage for dev
+  # Storage
   variable.storage.default = "bx500";
 
   # Download container template from GitHub Releases
@@ -79,6 +76,6 @@
     start_on_boot = true;
 
     # Tags
-    tags = [ "dev" "influxdb" "monitoring" ];
+    tags = [ "influxdb" "monitoring" ];
   };
 }

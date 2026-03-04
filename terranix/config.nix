@@ -17,7 +17,7 @@
       organization = "jagadam97";
 
       workspaces = {
-        name = "nixos-infra-\${var.environment}";
+        name = "donnager";
       };
     };
   };
