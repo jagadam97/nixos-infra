@@ -92,7 +92,7 @@
     start_on_boot = true;
 
     # Tags
-    tags = [ "influxdb" "monitoring" ];
+    tags = [ "influxdb" "monitoring" "test" ];
 
     # Unprivileged container
     unprivileged = true;
