@@ -23,7 +23,7 @@
   # InfluxDB container
   resource.proxmox_virtual_environment_container.influxdb = {
     node_name = "\${var.proxmox_node}";
-    vm_id = 104;
+    vm_id = 204;
 
     # Template
     operating_system = {
