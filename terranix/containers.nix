@@ -68,17 +68,15 @@
       enabled = true;
     };
 
-    # Mount points
+    # Mount points - bind mounts from Proxmox host directories
     mount_point = [
       {
-        volume = "\${var.storage}";
+        volume = "/mnt/pve/bx500/influxdb/data";
         path = "/var/lib/influxdb2";
-        size = "10G";
       }
       {
-        volume = "\${var.storage}";
+        volume = "/mnt/pve/bx500/influxdb/config";
         path = "/etc/influxdb2";
-        size = "1G";
       }
     ];
 
