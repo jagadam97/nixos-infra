@@ -24,11 +24,6 @@
 
   # Variables
   variable = {
-    environment = {
-      type = "string";
-      description = "Environment name (dev/prod)";
-    };
-
     proxmox_api_url = {
       type = "string";
       description = "Proxmox API URL";

@@ -79,10 +79,6 @@
     "required_version": ">= 1.0.0"
   },
   "variable": {
-    "environment": {
-      "description": "Environment name (dev/prod)",
-      "type": "string"
-    },
     "proxmox_api_token": {
       "description": "Proxmox API token",
       "sensitive": true,
