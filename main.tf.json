@@ -14,8 +14,8 @@
           "cores": 1
         },
         "disk": {
-          "datastore_id": "${var.storage}",
-          "size": 8
+          "datastore_id": "local-lvm",
+          "size": 4
         },
         "features": {
           "nesting": true
@@ -23,8 +23,9 @@
         "initialization": {
           "dns": {
             "servers": [
-              "8.8.8.8",
-              "1.1.1.1"
+              "152.70.69.235",
+              "1.1.1.1",
+              "8.8.8.8"
             ]
           },
           "hostname": "influxdb",
@@ -55,7 +56,7 @@
           "enabled": true,
           "name": "eth0"
         },
-        "node_name": "${var.proxmox_node}",
+        "node_name": "donnager",
         "operating_system": {
           "template_file_id": "${proxmox_virtual_environment_download_file.influxdb_template.id}",
           "type": "nixos"
@@ -64,8 +65,7 @@
         "started": true,
         "tags": [
           "influxdb",
-          "monitoring",
-          "test"
+          "monitoring"
         ],
         "unprivileged": true,
         "vm_id": 204
@@ -74,9 +74,9 @@
     "proxmox_virtual_environment_download_file": {
       "influxdb_template": {
         "content_type": "vztmpl",
-        "datastore_id": "local",
+        "datastore_id": "hd4000",
         "file_name": "influxdb-v2.7.12.tar.xz",
-        "node_name": "${var.proxmox_node}",
+        "node_name": "donnager",
         "overwrite": false,
         "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/influxdb-v2.7.12/influxdb-v2.7.12.tar.xz"
       }
@@ -103,10 +103,6 @@
       "sensitive": true,
       "type": "string"
     },
-    "proxmox_node": {
-      "default": "donnager",
-      "type": "string"
-    },
     "proxmox_password": {
       "description": "Proxmox password",
       "sensitive": true,
@@ -116,9 +112,6 @@
       "description": "Proxmox username (e.g., root@pam)",
       "sensitive": true,
       "type": "string"
-    },
-    "storage": {
-      "default": "bx500"
     }
   }
 }

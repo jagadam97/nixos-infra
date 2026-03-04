@@ -1,98 +1,28 @@
 { config, lib, pkgs, ... }:
 
+let
+  # Load versions from separate file
+  versions = import ./versions.nix;
+
+  # Auto-import all container files from the containers directory
+  # Uses filename as the container name
+  containerFiles = builtins.readDir ./containers;
+
+  importContainer = name: _:
+    let
+      # Remove .nix extension to get container name
+      containerName = lib.removeSuffix ".nix" name;
+      containerConfig = import ./containers/${name};
+      # Get version from versions.nix (required)
+      containerVersion = versions.${containerName} or (throw "Version not found for container: ${containerName}");
+    in
+    import ./modules/container.nix (containerConfig // {
+      name = containerName;
+      version = containerVersion;
+    });
+
+  containerImports = lib.mapAttrsToList importContainer containerFiles;
+in
 {
-  # Proxmox node
-  variable.proxmox_node = {
-    type = "string";
-    default = "donnager";
-  };
-
-  # Storage
-  variable.storage.default = "bx500";
-
-  # Download container template from GitHub Releases
-  resource.proxmox_virtual_environment_download_file.influxdb_template = {
-    node_name = "\${var.proxmox_node}";
-    content_type = "vztmpl";
-    datastore_id = "local";
-    url = "https://github.com/jagadam97/nixos-vm-builder/releases/download/influxdb-v2.7.12/influxdb-v2.7.12.tar.xz";
-    file_name = "influxdb-v2.7.12.tar.xz";
-    overwrite = false;
-  };
-
-  # InfluxDB container
-  resource.proxmox_virtual_environment_container.influxdb = {
-    node_name = "\${var.proxmox_node}";
-    vm_id = 204;
-
-    # Template
-    operating_system = {
-      template_file_id = "\${proxmox_virtual_environment_download_file.influxdb_template.id}";
-      type = "nixos";
-    };
-
-    # Hostname and DNS
-    initialization = {
-      hostname = "influxdb";
-      dns = {
-        servers = [ "8.8.8.8" "1.1.1.1" ];
-      };
-      ip_config = [{
-        ipv4 = {
-          address = "192.168.4.248/24";
-          gateway = "192.168.4.1";
-        };
-      }];
-    };
-
-    # Disk
-    disk = {
-      datastore_id = "\${var.storage}";
-      size = 8;
-    };
-
-    # CPU
-    cpu = {
-      cores = 1;
-    };
-
-    # Memory
-    memory = {
-      dedicated = 712;
-    };
-
-    # Network interface
-    network_interface = {
-      name = "eth0";
-      bridge = "vmbr0";
-      enabled = true;
-    };
-
-    # Mount points - bind mounts from Proxmox host directories
-    mount_point = [
-      {
-        volume = "/mnt/pve/bx500/influxdb/data";
-        path = "/var/lib/influxdb2";
-      }
-      {
-        volume = "/mnt/pve/bx500/influxdb/config";
-        path = "/etc/influxdb2";
-      }
-    ];
-
-    # Features
-    features = {
-      nesting = true;
-    };
-
-    # Start on boot
-    started = true;
-    start_on_boot = true;
-
-    # Tags
-    tags = [ "influxdb" "monitoring" "test" ];
-
-    # Unprivileged container
-    unprivileged = true;
-  };
+  imports = containerImports;
 }
