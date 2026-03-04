@@ -24,10 +24,26 @@
   resource.proxmox_virtual_environment_container.influxdb = {
     node_name = "\${var.proxmox_node}";
     vm_id = 104;
-    hostname = "influxdb";
 
-    # Use downloaded template
-    template_file_id = "\${proxmox_virtual_environment_download_file.influxdb_template.id}";
+    # Template
+    operating_system = {
+      template_file_id = "\${proxmox_virtual_environment_download_file.influxdb_template.id}";
+      type = "nixos";
+    };
+
+    # Hostname and DNS
+    initialization = {
+      hostname = "influxdb";
+      dns = {
+        servers = [ "8.8.8.8" "1.1.1.1" ];
+      };
+      ip_config = [{
+        ipv4 = {
+          address = "192.168.4.248/24";
+          gateway = "192.168.4.1";
+        };
+      }];
+    };
 
     # Disk
     disk = {
@@ -35,21 +51,21 @@
       size = 8;
     };
 
-    # CPU and memory
+    # CPU
     cpu = {
       cores = 1;
     };
 
+    # Memory
     memory = {
       dedicated = 512;
     };
 
-    # Network
+    # Network interface
     network_interface = {
       name = "eth0";
       bridge = "vmbr0";
-      ipv4_address = "192.168.4.248/24";
-      ipv4_gateway = "192.168.4.1";
+      enabled = true;
     };
 
     # Mount points
@@ -77,5 +93,8 @@
 
     # Tags
     tags = [ "influxdb" "monitoring" ];
+
+    # Unprivileged container
+    unprivileged = true;
   };
 }

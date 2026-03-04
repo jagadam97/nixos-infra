@@ -19,7 +19,23 @@
         "features": {
           "nesting": true
         },
-        "hostname": "influxdb",
+        "initialization": {
+          "dns": {
+            "servers": [
+              "8.8.8.8",
+              "1.1.1.1"
+            ]
+          },
+          "hostname": "influxdb",
+          "ip_config": [
+            {
+              "ipv4": {
+                "address": "192.168.4.248/24",
+                "gateway": "192.168.4.1"
+              }
+            }
+          ]
+        },
         "memory": {
           "dedicated": 512
         },
@@ -37,18 +53,21 @@
         ],
         "network_interface": {
           "bridge": "vmbr0",
-          "ipv4_address": "192.168.4.248/24",
-          "ipv4_gateway": "192.168.4.1",
+          "enabled": true,
           "name": "eth0"
         },
         "node_name": "${var.proxmox_node}",
+        "operating_system": {
+          "template_file_id": "${proxmox_virtual_environment_download_file.influxdb_template.id}",
+          "type": "nixos"
+        },
         "start_on_boot": true,
         "started": true,
         "tags": [
           "influxdb",
           "monitoring"
         ],
-        "template_file_id": "${proxmox_virtual_environment_download_file.influxdb_template.id}",
+        "unprivileged": true,
         "vm_id": 104
       }
     },
@@ -80,7 +99,7 @@
   },
   "variable": {
     "proxmox_api_token": {
-      "description": "Proxmox API token",
+      "description": "Proxmox API token (format: user@realm!tokenid=secret)",
       "sensitive": true,
       "type": "string"
     },

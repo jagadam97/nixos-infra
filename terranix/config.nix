@@ -32,7 +32,7 @@
 
     proxmox_api_token = {
       type = "string";
-      description = "Proxmox API token";
+      description = "Proxmox API token (format: user@realm!tokenid=secret)";
       sensitive = true;
     };
   };
@@ -41,6 +41,6 @@
   provider.proxmox = {
     endpoint = "\${var.proxmox_api_url}";
     api_token = "\${var.proxmox_api_token}";
-    insecure = true; # Set to false with proper certs
+    insecure = true;
   };
 }
