@@ -12,9 +12,6 @@
 result
 result-*
 
-# Generated config
-main.tf.json
-
 # Editor
 *.swp
 *.swo

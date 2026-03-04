@@ -1,0 +1,104 @@
+{
+  "provider": {
+    "proxmox": {
+      "api_token": "${var.proxmox_api_token}",
+      "endpoint": "${var.proxmox_api_url}",
+      "insecure": true
+    }
+  },
+  "resource": {
+    "proxmox_virtual_environment_container": {
+      "influxdb": {
+        "cpu": {
+          "cores": 1
+        },
+        "disk": {
+          "datastore_id": "${var.storage}",
+          "size": 8
+        },
+        "features": {
+          "nesting": true
+        },
+        "hostname": "influxdb",
+        "memory": {
+          "dedicated": 512
+        },
+        "mount_point": [
+          {
+            "path": "/var/lib/influxdb2",
+            "size": "10G",
+            "volume": "${var.storage}"
+          },
+          {
+            "path": "/etc/influxdb2",
+            "size": "1G",
+            "volume": "${var.storage}"
+          }
+        ],
+        "network_interface": {
+          "bridge": "vmbr0",
+          "ipv4_address": "192.168.4.248/24",
+          "ipv4_gateway": "192.168.4.1",
+          "name": "eth0"
+        },
+        "node_name": "${var.proxmox_node}",
+        "start_on_boot": true,
+        "started": true,
+        "tags": [
+          "influxdb",
+          "monitoring"
+        ],
+        "template_file_id": "${proxmox_virtual_environment_download_file.influxdb_template.id}",
+        "vm_id": 104
+      }
+    },
+    "proxmox_virtual_environment_download_file": {
+      "influxdb_template": {
+        "content_type": "vztmpl",
+        "datastore_id": "local",
+        "file_name": "influxdb-v2.7.12.tar.xz",
+        "node_name": "${var.proxmox_node}",
+        "overwrite": false,
+        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/influxdb-v2.7.12/influxdb-v2.7.12.tar.xz"
+      }
+    }
+  },
+  "terraform": {
+    "cloud": {
+      "organization": "jagadam97",
+      "workspaces": {
+        "name": "donnager"
+      }
+    },
+    "required_providers": {
+      "proxmox": {
+        "source": "bpg/proxmox",
+        "version": ">= 0.50.0"
+      }
+    },
+    "required_version": ">= 1.0.0"
+  },
+  "variable": {
+    "environment": {
+      "description": "Environment name (dev/prod)",
+      "type": "string"
+    },
+    "proxmox_api_token": {
+      "description": "Proxmox API token",
+      "sensitive": true,
+      "type": "string"
+    },
+    "proxmox_api_url": {
+      "description": "Proxmox API URL",
+      "sensitive": true,
+      "type": "string"
+    },
+    "proxmox_node": {
+      "default": "donnager",
+      "type": "string"
+    },
+    "storage": {
+      "default": "bx500"
+    }
+  }
+}
