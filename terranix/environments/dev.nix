@@ -1,0 +1,84 @@
+{ config, lib, pkgs, ... }:
+
+{
+  # Set environment variable
+  variable.environment.default = "dev";
+
+  # Proxmox node for dev environment
+  variable.proxmox_node = {
+    type = "string";
+    default = "donnager";
+  };
+
+  # Storage for dev
+  variable.storage.default = "bx500";
+
+  # Download container template from GitHub Releases
+  resource.proxmox_virtual_environment_download_file.influxdb_template = {
+    node_name = "\${var.proxmox_node}";
+    content_type = "vztmpl";
+    datastore_id = "local";
+    url = "https://github.com/jagadam97/nixos-vm-builder/releases/download/influxdb-v2.7.12/influxdb-v2.7.12.tar.xz";
+    file_name = "influxdb-v2.7.12.tar.xz";
+    overwrite = false;
+  };
+
+  # InfluxDB container
+  resource.proxmox_virtual_environment_container.influxdb = {
+    node_name = "\${var.proxmox_node}";
+    vm_id = 104;
+    hostname = "influxdb";
+
+    # Use downloaded template
+    template_file_id = "\${proxmox_virtual_environment_download_file.influxdb_template.id}";
+
+    # Disk
+    disk = {
+      datastore_id = "\${var.storage}";
+      size = 8;
+    };
+
+    # CPU and memory
+    cpu = {
+      cores = 1;
+    };
+
+    memory = {
+      dedicated = 512;
+    };
+
+    # Network
+    network_interface = {
+      name = "eth0";
+      bridge = "vmbr0";
+      ipv4_address = "192.168.4.248/24";
+      ipv4_gateway = "192.168.4.1";
+    };
+
+    # Mount points
+    mount_point = [
+      {
+        volume = "\${var.storage}";
+        path = "/var/lib/influxdb2";
+        size = "10G";
+      }
+      {
+        volume = "\${var.storage}";
+        path = "/etc/influxdb2";
+        size = "1G";
+      }
+    ];
+
+    # Features
+    features = {
+      nesting = true;
+    };
+
+    # Start on boot
+    started = true;
+    start_on_boot = true;
+
+    # Tags
+    tags = [ "dev" "influxdb" "monitoring" ];
+  };
+}
