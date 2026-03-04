@@ -15,7 +15,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
 
       # Generate Terraform JSON from Terranix config
-      terraformConfig = terranix.lib.terranixConfiguration {
+      terraformConfigPath = terranix.lib.terranixConfiguration {
         inherit system;
         modules = [
           ./terranix/config.nix
@@ -24,12 +24,11 @@
       };
     in
     {
-      # Generate Terraform config
+      # Generate Terraform config (copy from nix store)
       packages.${system} = {
-        default = pkgs.writeTextFile {
-          name = "main.tf.json";
-          text = builtins.toJSON terraformConfig;
-        };
+        default = pkgs.runCommand "main.tf.json" {} ''
+          cp ${terraformConfigPath} $out
+        '';
       };
 
       # Dev shell with tools
@@ -37,6 +36,7 @@
         buildInputs = with pkgs; [
           terranix.packages.${system}.default
           terraform
+          terragrunt
           jq
         ];
       };
@@ -46,8 +46,10 @@
         type = "app";
         program = toString (pkgs.writeShellScript "generate" ''
           echo "Generating Terraform config..."
-          nix build . --out-link result
-          cp -L result main.tf.json
+          nix build . --out-link result-tf
+          cp result-tf main.tf.json
+          chmod 644 main.tf.json
+          rm -f result-tf
           echo "Done! Generated main.tf.json"
         '');
       };

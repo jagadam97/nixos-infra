@@ -5,6 +5,9 @@
 *.tfvars
 .terraform.lock.hcl
 
+# Terragrunt
+.terragrunt-cache/
+
 # Nix
 result
 result-*
