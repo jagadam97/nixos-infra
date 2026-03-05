@@ -1,0 +1,118 @@
+{
+  "provider": {
+    "proxmox": {
+      "endpoint": "${var.proxmox_api_url}",
+      "insecure": true,
+      "password": "${var.proxmox_password}",
+      "username": "${var.proxmox_username}"
+    }
+  },
+  "resource": {
+    "proxmox_virtual_environment_container": {
+      "influxdb": {
+        "cpu": {
+          "cores": 1
+        },
+        "disk": {
+          "datastore_id": "local-lvm",
+          "size": 4
+        },
+        "features": {
+          "nesting": true
+        },
+        "initialization": {
+          "dns": {
+            "servers": [
+              "152.70.69.235",
+              "1.1.1.1",
+              "8.8.8.8"
+            ]
+          },
+          "hostname": "influxdb",
+          "ip_config": [
+            {
+              "ipv4": {
+                "address": "192.168.4.248/24",
+                "gateway": "192.168.4.1"
+              }
+            }
+          ]
+        },
+        "memory": {
+          "dedicated": 768
+        },
+        "mount_point": [
+          {
+            "path": "/var/lib/influxdb2",
+            "volume": "/mnt/pve/bx500/influxdb/data"
+          },
+          {
+            "path": "/etc/influxdb2",
+            "volume": "/mnt/pve/bx500/influxdb/config"
+          }
+        ],
+        "network_interface": {
+          "bridge": "vmbr0",
+          "enabled": true,
+          "name": "eth0"
+        },
+        "node_name": "donnager",
+        "operating_system": {
+          "template_file_id": "${proxmox_virtual_environment_download_file.influxdb_template.id}",
+          "type": "nixos"
+        },
+        "start_on_boot": true,
+        "started": true,
+        "tags": [
+          "influxdb",
+          "monitoring",
+          "database"
+        ],
+        "unprivileged": true,
+        "vm_id": 204
+      }
+    },
+    "proxmox_virtual_environment_download_file": {
+      "influxdb_template": {
+        "content_type": "vztmpl",
+        "datastore_id": "hd4000",
+        "file_name": "influxdb-v2.7.12.tar.xz",
+        "node_name": "donnager",
+        "overwrite": false,
+        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/influxdb-v2.7.12/influxdb-v2.7.12.tar.xz"
+      }
+    }
+  },
+  "terraform": {
+    "cloud": {
+      "organization": "jagadam97",
+      "workspaces": {
+        "name": "donnager"
+      }
+    },
+    "required_providers": {
+      "proxmox": {
+        "source": "bpg/proxmox",
+        "version": ">= 0.50.0"
+      }
+    },
+    "required_version": ">= 1.0.0"
+  },
+  "variable": {
+    "proxmox_api_url": {
+      "description": "Proxmox API URL",
+      "sensitive": true,
+      "type": "string"
+    },
+    "proxmox_password": {
+      "description": "Proxmox password",
+      "sensitive": true,
+      "type": "string"
+    },
+    "proxmox_username": {
+      "description": "Proxmox username (e.g., root@pam)",
+      "sensitive": true,
+      "type": "string"
+    }
+  }
+}
