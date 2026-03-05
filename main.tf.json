@@ -15,7 +15,7 @@
         },
         "disk": {
           "datastore_id": "local-lvm",
-          "size": 8
+          "size": 4
         },
         "features": {
           "nesting": true
@@ -39,7 +39,7 @@
           ]
         },
         "memory": {
-          "dedicated": 712
+          "dedicated": 768
         },
         "mount_point": [
           {
@@ -65,7 +65,8 @@
         "started": true,
         "tags": [
           "influxdb",
-          "monitoring"
+          "monitoring",
+          "database"
         ],
         "unprivileged": true,
         "vm_id": 204

@@ -17,6 +17,7 @@
   ];
 
   # Custom values (defaults: cores=1, memory=512, disk_size=8)
-  memory = 712;
-  tags = [ "influxdb" "monitoring" ];
+  memory = 768;
+  disk_size = 4;
+  tags = [ "influxdb" "monitoring" "database" ];
 }
