@@ -15,7 +15,7 @@
         },
         "disk": {
           "datastore_id": "local-lvm",
-          "size": 4
+          "size": 8
         },
         "features": {
           "nesting": true
