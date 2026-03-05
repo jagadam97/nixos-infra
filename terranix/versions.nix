@@ -3,3 +3,6 @@
 {
   influxdb = "v2.7.12";
 }
+{
+  influxdb = "v2.7.12";
+}
