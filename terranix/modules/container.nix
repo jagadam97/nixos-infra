@@ -1,7 +1,8 @@
 # Container module - creates a Proxmox LXC container with defaults
 # Usage: import ./modules/container.nix { name = "mycontainer"; vm_id = 100; ...; }
 
-{ name
+{ lib
+, name
 , vm_id
 , version
 , ip_address
@@ -17,6 +18,9 @@
 , bridge ? "vmbr0"
 , dns_servers ? [ "152.70.69.235" "1.1.1.1" "8.8.8.8" ]
 , os_type ? "nixos"
+, unprivileged ? true
+, features ? { nesting = true; }
+, lxc_config ? null
 }:
 
 let
@@ -88,9 +92,7 @@ in
     mount_point = mount_points;
 
     # Features
-    features = {
-      nesting = true;
-    };
+    features = features;
 
     # Start on boot
     started = true;
@@ -99,7 +101,20 @@ in
     # Tags
     tags = tags;
 
-    # Unprivileged container
-    unprivileged = true;
+    # Privileged/unprivileged
+    unprivileged = unprivileged;
+  };
+
+  # Custom LXC config (e.g., GPU passthrough) via SSH to Proxmox host
+  resource.null_resource."${name}_lxc_config" = lib.mkIf (lxc_config != null) {
+    triggers = {
+      vm_id = toString vm_id;
+      config_hash = builtins.hashString "md5" (if lxc_config != null then lxc_config else "");
+    };
+    provisioner.local-exec = lib.mkIf (lxc_config != null) {
+      command = ''
+        echo '${if lxc_config != null then lxc_config else ""}' | ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${node_name} "cat >> /etc/pve/lxc/${toString vm_id}.conf"
+      '';
+    };
   };
 }

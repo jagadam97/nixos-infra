@@ -8,6 +8,19 @@
     }
   },
   "resource": {
+    "null_resource": {
+      "jellyfin_lxc_config": {
+        "provisioner": {
+          "local-exec": {
+            "command": "echo 'lxc.cgroup2.devices.allow: c 226:0 rwm\nlxc.cgroup2.devices.allow: c 226:128 rwm\nlxc.mount.entry: /dev/dri/card1 dev/dri/card1 none bind,optional,create=file\nlxc.mount.entry: /dev/dri/renderD128 dev/dri/renderD128 none bind,optional,create=file\n' | ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null donnager \"cat >> /etc/pve/lxc/203.conf\"\n"
+          }
+        },
+        "triggers": {
+          "config_hash": "0e0457c62681a95fbffb1a2355c262a7",
+          "vm_id": "203"
+        }
+      }
+    },
     "proxmox_virtual_environment_container": {
       "influxdb": {
         "cpu": {
@@ -70,6 +83,71 @@
         ],
         "unprivileged": true,
         "vm_id": 204
+      },
+      "jellyfin": {
+        "cpu": {
+          "cores": 4
+        },
+        "disk": {
+          "datastore_id": "local-lvm",
+          "size": 8
+        },
+        "features": {
+          "nesting": true
+        },
+        "initialization": {
+          "dns": {
+            "servers": [
+              "152.70.69.235",
+              "1.1.1.1",
+              "8.8.8.8"
+            ]
+          },
+          "hostname": "jellyfin",
+          "ip_config": [
+            {
+              "ipv4": {
+                "address": "192.168.4.203/24",
+                "gateway": "192.168.4.1"
+              }
+            }
+          ]
+        },
+        "memory": {
+          "dedicated": 4096
+        },
+        "mount_point": [
+          {
+            "path": "/var/lib/jellyfin",
+            "volume": "/mnt/pve/bx500/jellyfin"
+          },
+          {
+            "path": "/mnt/media/bx1000",
+            "volume": "/mnt/pve/bx1000/media"
+          },
+          {
+            "path": "/mnt/media/hd4000",
+            "volume": "/mnt/pve/hd4000/media"
+          }
+        ],
+        "network_interface": {
+          "bridge": "vmbr0",
+          "enabled": true,
+          "name": "eth0"
+        },
+        "node_name": "donnager",
+        "operating_system": {
+          "template_file_id": "${proxmox_virtual_environment_download_file.jellyfin_template.id}",
+          "type": "nixos"
+        },
+        "start_on_boot": true,
+        "started": true,
+        "tags": [
+          "jellyfin",
+          "media"
+        ],
+        "unprivileged": true,
+        "vm_id": 203
       }
     },
     "proxmox_virtual_environment_download_file": {
@@ -80,6 +158,14 @@
         "node_name": "donnager",
         "overwrite": false,
         "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/influxdb-v2.7.12/influxdb-v2.7.12.tar.xz"
+      },
+      "jellyfin_template": {
+        "content_type": "vztmpl",
+        "datastore_id": "hd4000",
+        "file_name": "jellyfin-v10.11.6_7.1.2-2.tar.xz",
+        "node_name": "donnager",
+        "overwrite": false,
+        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/jellyfin-v10.11.6_7.1.2-2/jellyfin-v10.11.6_7.1.2-2.tar.xz"
       }
     }
   },
