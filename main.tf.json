@@ -8,6 +8,19 @@
     }
   },
   "resource": {
+    "null_resource": {
+      "jellyfin_lxc_config": {
+        "provisioner": {
+          "local-exec": {
+            "command": "echo 'lxc.cgroup2.devices.allow: c 226:0 rwm\nlxc.cgroup2.devices.allow: c 226:128 rwm\nlxc.mount.entry: /dev/dri/card1 dev/dri/card1 none bind,optional,create=file\nlxc.mount.entry: /dev/dri/renderD128 dev/dri/renderD128 none bind,optional,create=file\n' | ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null donnager \"cat >> /etc/pve/lxc/203.conf\"\n"
+          }
+        },
+        "triggers": {
+          "config_hash": "0e0457c62681a95fbffb1a2355c262a7",
+          "vm_id": "203"
+        }
+      }
+    },
     "proxmox_virtual_environment_container": {
       "influxdb": {
         "cpu": {
@@ -127,7 +140,6 @@
           "template_file_id": "${proxmox_virtual_environment_download_file.jellyfin_template.id}",
           "type": "nixos"
         },
-        "raw_lxc": "lxc.cgroup2.devices.allow: c 226:0 rwm\nlxc.cgroup2.devices.allow: c 226:128 rwm\nlxc.mount.entry: /dev/dri/card1 dev/dri/card1 none bind,optional,create=file\nlxc.mount.entry: /dev/dri/renderD128 dev/dri/renderD128 none bind,optional,create=file",
         "start_on_boot": true,
         "started": true,
         "tags": [
