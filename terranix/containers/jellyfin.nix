@@ -3,6 +3,7 @@
   vm_id = 203;
   ip_address = "192.168.4.203/24";
   gateway = "192.168.4.1";
+  ssh_host = "192.168.4.240";
 
   # 4 cores for transcoding
   cores = 4;

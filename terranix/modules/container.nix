@@ -14,6 +14,7 @@
 , disk_size ? 8
 , tags ? []
 , node_name ? "donnager"
+, ssh_host ? node_name
 , storage ? "local-lvm"
 , bridge ? "vmbr0"
 , dns_servers ? [ "152.70.69.235" "1.1.1.1" "8.8.8.8" ]
@@ -106,15 +107,19 @@ in
   };
 
   # Custom LXC config (e.g., GPU passthrough) via SSH to Proxmox host
-  resource.null_resource."${name}_lxc_config" = lib.mkIf (lxc_config != null) {
-    triggers = {
-      vm_id = toString vm_id;
+  # Runs after container creation due to implicit dependency on vm_id
+  resource.terraform_data."${name}_lxc_config" = lib.mkIf (lxc_config != null) {
+    input = {
+      vm_id = vm_id;
       config_hash = builtins.hashString "md5" (if lxc_config != null then lxc_config else "");
     };
     provisioner.local-exec = lib.mkIf (lxc_config != null) {
       command = ''
-        echo '${if lxc_config != null then lxc_config else ""}' | ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${node_name} "cat >> /etc/pve/lxc/${toString vm_id}.conf"
+        echo '${if lxc_config != null then lxc_config else ""}' | ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${ssh_host} "cat >> /etc/pve/lxc/${toString vm_id}.conf"
       '';
+    };
+    lifecycle = {
+      replace_triggered_by = [ "proxmox_virtual_environment_container.${name}" ];
     };
   };
 }
