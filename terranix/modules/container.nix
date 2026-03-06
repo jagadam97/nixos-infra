@@ -2,7 +2,6 @@
 # Usage: import ./modules/container.nix { name = "mycontainer"; vm_id = 100; ...; }
 
 { lib
-, pkgs
 , name
 , vm_id
 , version
@@ -15,9 +14,6 @@
 , disk_size ? 8
 , tags ? []
 , node_name ? "donnager"
-, ssh_host ? node_name
-, ssh_user ? "root"
-, ssh_pass ? null
 , storage ? "local-lvm"
 , bridge ? "vmbr0"
 , dns_servers ? [ "152.70.69.235" "1.1.1.1" "8.8.8.8" ]
@@ -107,26 +103,10 @@ in
 
     # Privileged/unprivileged
     unprivileged = unprivileged;
-  };
 
-  # Custom LXC config (e.g., GPU passthrough) via SSH to Proxmox host
-  # Runs after container creation due to implicit dependency on vm_id
-  resource.terraform_data."${name}_lxc_config" = lib.mkIf (lxc_config != null) {
-    input = {
-      vm_id = vm_id;
-      config_hash = builtins.hashString "md5" (if lxc_config != null then lxc_config else "");
-    };
-    provisioner.local-exec = lib.mkIf (lxc_config != null) {
-      command = ''
-        echo '${if lxc_config != null then lxc_config else ""}' | sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${ssh_user}@${ssh_host} "cat >> /etc/pve/lxc/${toString vm_id}.conf"
-      '';
-      environment = {
-        SSH_PASS = "\${var.proxmox_password}";
-        PATH = "${pkgs.openssh}/bin:${pkgs.sshpass}/bin:$PATH";
-      };
-    };
-    lifecycle = {
-      replace_triggered_by = [ "proxmox_virtual_environment_container.${name}" ];
+    # Raw LXC config for GPU passthrough etc
+    ${lib.optionalString (lxc_config != null) "lxc"} = lib.optionalAttrs (lxc_config != null) {
+      raw = lxc_config;
     };
   };
 }
