@@ -2,6 +2,7 @@
 # Usage: import ./modules/container.nix { name = "mycontainer"; vm_id = 100; ...; }
 
 { lib
+, pkgs
 , name
 , vm_id
 , version
@@ -15,6 +16,8 @@
 , tags ? []
 , node_name ? "donnager"
 , ssh_host ? node_name
+, ssh_user ? "root"
+, ssh_pass ? null
 , storage ? "local-lvm"
 , bridge ? "vmbr0"
 , dns_servers ? [ "152.70.69.235" "1.1.1.1" "8.8.8.8" ]
@@ -115,8 +118,12 @@ in
     };
     provisioner.local-exec = lib.mkIf (lxc_config != null) {
       command = ''
-        echo '${if lxc_config != null then lxc_config else ""}' | ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${ssh_host} "cat >> /etc/pve/lxc/${toString vm_id}.conf"
+        echo '${if lxc_config != null then lxc_config else ""}' | sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${ssh_user}@${ssh_host} "cat >> /etc/pve/lxc/${toString vm_id}.conf"
       '';
+      environment = {
+        SSH_PASS = "\${var.proxmox_password}";
+        PATH = "${pkgs.openssh}/bin:${pkgs.sshpass}/bin:$PATH";
+      };
     };
     lifecycle = {
       replace_triggered_by = [ "proxmox_virtual_environment_container.${name}" ];

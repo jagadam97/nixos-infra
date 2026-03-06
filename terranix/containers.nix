@@ -16,7 +16,7 @@ let
       # Get version from versions.nix (required)
       containerVersion = versions.${containerName} or (throw "Version not found for container: ${containerName}");
     in
-    import ./modules/container.nix ({ inherit lib; } // containerConfig // {
+    import ./modules/container.nix ({ inherit lib pkgs; } // containerConfig // {
       name = containerName;
       version = containerVersion;
     });

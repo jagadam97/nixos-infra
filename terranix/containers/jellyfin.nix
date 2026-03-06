@@ -4,6 +4,7 @@
   ip_address = "192.168.4.203/24";
   gateway = "192.168.4.1";
   ssh_host = "192.168.4.240";
+  ssh_user = "root";
 
   # 4 cores for transcoding
   cores = 4;
