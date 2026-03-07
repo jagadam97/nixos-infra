@@ -36,5 +36,5 @@
   ];
 
   tags = [ "jellyfin" "media" ];
-  emplate_file_storage = "bx500";
+  template_file_storage = "bx500";
 }
