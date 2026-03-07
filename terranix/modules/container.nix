@@ -8,6 +8,7 @@
 , ip_address
 , gateway
 , mount_points ? []
+, device_passthrough ? []
 , hostname ? name
 , cores ? 1
 , memory ? 512
@@ -20,7 +21,6 @@
 , os_type ? "nixos"
 , unprivileged ? true
 , features ? { nesting = true; }
-, lxc_config ? null
 }:
 
 let
@@ -91,6 +91,9 @@ in
     # Mount points
     mount_point = mount_points;
 
+    # Device passthrough
+    device_passthrough = device_passthrough;
+
     # Features
     features = features;
 
@@ -103,10 +106,5 @@ in
 
     # Privileged/unprivileged
     unprivileged = unprivileged;
-
-    # Raw LXC config for GPU passthrough etc
-    ${lib.optionalString (lxc_config != null) "lxc"} = lib.optionalAttrs (lxc_config != null) {
-      raw = lxc_config;
-    };
   };
 }

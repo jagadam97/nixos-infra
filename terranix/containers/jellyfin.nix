@@ -25,12 +25,14 @@
   ];
 
   # Intel iGPU passthrough for transcoding
-  lxc_config = ''
-lxc.cgroup2.devices.allow: c 226:0 rwm
-lxc.cgroup2.devices.allow: c 226:128 rwm
-lxc.mount.entry: /dev/dri/card1 dev/dri/card1 none bind,optional,create=file
-lxc.mount.entry: /dev/dri/renderD128 dev/dri/renderD128 none bind,optional,create=file
-'';
+  device_passthrough = [
+    {
+      path = "/dev/dri/card1";
+    }
+    {
+      path = "/dev/dri/renderD128";
+    }
+  ];
 
   tags = [ "jellyfin" "media" ];
 }

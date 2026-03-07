@@ -10,10 +10,10 @@
   "resource": {
     "proxmox_virtual_environment_container": {
       "influxdb": {
-        "": {},
         "cpu": {
           "cores": 1
         },
+        "device_passthrough": [],
         "disk": {
           "datastore_id": "local-lvm",
           "size": 8
@@ -76,6 +76,14 @@
         "cpu": {
           "cores": 4
         },
+        "device_passthrough": [
+          {
+            "path": "/dev/dri/card1"
+          },
+          {
+            "path": "/dev/dri/renderD128"
+          }
+        ],
         "disk": {
           "datastore_id": "local-lvm",
           "size": 8
@@ -100,9 +108,6 @@
               }
             }
           ]
-        },
-        "lxc": {
-          "raw": "lxc.cgroup2.devices.allow: c 226:0 rwm\nlxc.cgroup2.devices.allow: c 226:128 rwm\nlxc.mount.entry: /dev/dri/card1 dev/dri/card1 none bind,optional,create=file\nlxc.mount.entry: /dev/dri/renderD128 dev/dri/renderD128 none bind,optional,create=file\n"
         },
         "memory": {
           "dedicated": 4096
