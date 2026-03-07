@@ -85,7 +85,7 @@
           }
         ],
         "disk": {
-          "datastore_id": "bx500",
+          "datastore_id": "local-lvm",
           "size": 8
         },
         "features": {
@@ -157,7 +157,7 @@
       },
       "jellyfin_template": {
         "content_type": "vztmpl",
-        "datastore_id": "bx500",
+        "datastore_id": "hd4000",
         "file_name": "jellyfin-v10.11.6_7.1.2-2.tar.xz",
         "node_name": "donnager",
         "overwrite": false,
