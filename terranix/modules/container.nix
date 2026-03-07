@@ -21,6 +21,7 @@
 , os_type ? "nixos"
 , unprivileged ? true
 , features ? { nesting = true; }
+, template_file_storage ? "hd4000"
 }:
 
 let
@@ -34,7 +35,7 @@ in
   resource.proxmox_virtual_environment_download_file."${name}_template" = {
     node_name = node_name;
     content_type = "vztmpl";
-    datastore_id = "hd4000";
+    datastore_id = template_file_storage;
     url = template_url;
     file_name = template_file;
     overwrite = false;
