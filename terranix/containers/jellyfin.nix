@@ -7,7 +7,7 @@
   # 4 cores for transcoding
   cores = 4;
   memory = 4096;
-  storage = "bx500";
+  # storage = "bx500";
 
   # Mount points
   mount_points = [
@@ -36,5 +36,5 @@
   ];
 
   tags = [ "jellyfin" "media" ];
-  template_file_storage = "bx500";
+  # template_file_storage = "bx500";
 }
