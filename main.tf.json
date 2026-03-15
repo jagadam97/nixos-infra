@@ -71,6 +71,73 @@
         ],
         "unprivileged": true,
         "vm_id": 204
+      },
+      "qbittorrent": {
+        "cpu": {
+          "cores": 2
+        },
+        "device_passthrough": [],
+        "disk": {
+          "datastore_id": "local-lvm",
+          "size": 8
+        },
+        "features": {
+          "nesting": true
+        },
+        "initialization": {
+          "dns": {
+            "servers": [
+              "152.70.69.235",
+              "1.1.1.1",
+              "8.8.8.8"
+            ]
+          },
+          "hostname": "qbittorrent",
+          "ip_config": [
+            {
+              "ipv4": {
+                "address": "192.168.4.212/24",
+                "gateway": "192.168.4.1"
+              }
+            }
+          ]
+        },
+        "memory": {
+          "dedicated": 2048
+        },
+        "mount_point": [
+          {
+            "path": "/var/lib/qbittorrent",
+            "volume": "/mnt/pve/bx500/qbittorrent"
+          },
+          {
+            "path": "/mnt/bx1000/downloads",
+            "volume": "/mnt/pve/bx1000/downloads"
+          },
+          {
+            "path": "/mnt/hd4000/downloads",
+            "volume": "/mnt/pve/hd4000/downloads"
+          }
+        ],
+        "network_interface": {
+          "bridge": "vmbr0",
+          "enabled": true,
+          "name": "eth0"
+        },
+        "node_name": "donnager",
+        "operating_system": {
+          "template_file_id": "${proxmox_virtual_environment_download_file.qbittorrent_template.id}",
+          "type": "nixos"
+        },
+        "start_on_boot": true,
+        "started": true,
+        "tags": [
+          "qbittorrent",
+          "downloads",
+          "media"
+        ],
+        "unprivileged": true,
+        "vm_id": 205
       }
     },
     "proxmox_virtual_environment_download_file": {
@@ -81,6 +148,14 @@
         "node_name": "donnager",
         "overwrite": false,
         "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/influxdb-v2.7.12/influxdb-v2.7.12.tar.xz"
+      },
+      "qbittorrent_template": {
+        "content_type": "vztmpl",
+        "datastore_id": "hd4000",
+        "file_name": "qbittorrent-v5.1.4.tar.xz",
+        "node_name": "donnager",
+        "overwrite": false,
+        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/qbittorrent-v5.1.4/qbittorrent-v5.1.4.tar.xz"
       }
     }
   },
