@@ -111,12 +111,12 @@
             "volume": "/mnt/pve/bx500/qbittorrent"
           },
           {
-            "path": "/mnt/bx1000",
-            "volume": "/mnt/pve/bx1000"
+            "path": "/mnt/bx1000/downloads",
+            "volume": "/mnt/pve/bx1000/downloads"
           },
           {
-            "path": "/mnt/hd4000",
-            "volume": "/mnt/pve/hd4000"
+            "path": "/mnt/hd4000/downloads",
+            "volume": "/mnt/pve/hd4000/downloads"
           }
         ],
         "network_interface": {
