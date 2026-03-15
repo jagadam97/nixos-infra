@@ -8,19 +8,19 @@
   memory = 2048;
 
   # Mount points
-  # Config/state is persisted on bx500; downloads are on bx1000 and hd4000
+  # Config/state is persisted on bx500; full disks mounted for flexible download paths
   mount_points = [
     {
       volume = "/mnt/pve/bx500/qbittorrent";
       path = "/var/lib/qbittorrent";
     }
     {
-      volume = "/mnt/pve/bx1000/downloads";
-      path = "/mnt/bx1000/downloads";
+      volume = "/mnt/pve/bx1000";
+      path = "/mnt/bx1000";
     }
     {
-      volume = "/mnt/pve/hd4000/downloads";
-      path = "/mnt/hd4000/downloads";
+      volume = "/mnt/pve/hd4000";
+      path = "/mnt/hd4000";
     }
   ];
 
