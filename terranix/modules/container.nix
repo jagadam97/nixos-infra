@@ -29,7 +29,6 @@
     nesting = true;
   },
   template_file_storage ? "hd4000",
-  overwrite_template ? false,
 }:
 
 let
@@ -46,7 +45,7 @@ in
     datastore_id = template_file_storage;
     url = template_url;
     file_name = template_file;
-    overwrite = overwrite_template;
+    overwrite = false;
   };
 
   # Container resource
