@@ -6,6 +6,7 @@
 
   cores = 2;
   memory = 2048;
+  overwrite_template = true;
 
   # Mount points
   # Config/state is persisted on bx500; downloads are on bx1000 and hd4000

@@ -1,27 +1,35 @@
 # Container module - creates a Proxmox LXC container with defaults
 # Usage: import ./modules/container.nix { name = "mycontainer"; vm_id = 100; ...; }
 
-{ lib
-, name
-, vm_id
-, version
-, ip_address
-, gateway
-, mount_points ? []
-, device_passthrough ? []
-, hostname ? name
-, cores ? 1
-, memory ? 512
-, disk_size ? 8
-, tags ? []
-, node_name ? "donnager"
-, storage ? "local-lvm"
-, bridge ? "vmbr0"
-, dns_servers ? [ "152.70.69.235" "1.1.1.1" "8.8.8.8" ]
-, os_type ? "nixos"
-, unprivileged ? true
-, features ? { nesting = true; }
-, template_file_storage ? "hd4000"
+{
+  lib,
+  name,
+  vm_id,
+  version,
+  ip_address,
+  gateway,
+  mount_points ? [ ],
+  device_passthrough ? [ ],
+  hostname ? name,
+  cores ? 1,
+  memory ? 512,
+  disk_size ? 8,
+  tags ? [ ],
+  node_name ? "donnager",
+  storage ? "local-lvm",
+  bridge ? "vmbr0",
+  dns_servers ? [
+    "152.70.69.235"
+    "1.1.1.1"
+    "8.8.8.8"
+  ],
+  os_type ? "nixos",
+  unprivileged ? true,
+  features ? {
+    nesting = true;
+  },
+  template_file_storage ? "hd4000",
+  overwrite_template ? false,
 }:
 
 let
@@ -38,7 +46,7 @@ in
     datastore_id = template_file_storage;
     url = template_url;
     file_name = template_file;
-    overwrite = false;
+    overwrite = overwrite_template;
   };
 
   # Container resource
@@ -58,12 +66,14 @@ in
       dns = {
         servers = dns_servers;
       };
-      ip_config = [{
-        ipv4 = {
-          address = ip_address;
-          gateway = gateway;
-        };
-      }];
+      ip_config = [
+        {
+          ipv4 = {
+            address = ip_address;
+            gateway = gateway;
+          };
+        }
+      ];
     };
 
     # Disk
