@@ -151,10 +151,10 @@
       },
       "qbittorrent_template": {
         "content_type": "vztmpl",
-        "datastore_id": "hd4000",
+        "datastore_id": "bx500",
         "file_name": "qbittorrent-v5.1.4.tar.xz",
         "node_name": "donnager",
-        "overwrite": true,
+        "overwrite": false,
         "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/qbittorrent-v5.1.4/qbittorrent-v5.1.4.tar.xz"
       }
     }
