@@ -19,7 +19,7 @@
       },
       "maintainarr_template": {
         "content_type": "vztmpl",
-        "datastore_id": "hd4000",
+        "datastore_id": "bx500",
         "file_name": "maintainarr-v1.5.6-6.0.4.10291-4.0.17.2952.tar.xz",
         "node_name": "donnager",
         "overwrite": false,
@@ -27,7 +27,7 @@
       },
       "qbittorrent_template": {
         "content_type": "vztmpl",
-        "datastore_id": "bx500",
+        "datastore_id": "hd4000",
         "file_name": "qbittorrent-v5.1.4.tar.xz",
         "node_name": "donnager",
         "overwrite": false,
@@ -104,7 +104,7 @@
         },
         "device_passthrough": [],
         "disk": {
-          "datastore_id": "bx500",
+          "datastore_id": "local-lvm",
           "size": 8
         },
         "features": {
@@ -174,7 +174,7 @@
         },
         "device_passthrough": [],
         "disk": {
-          "datastore_id": "bx500",
+          "datastore_id": "local-lvm",
           "size": 8
         },
         "features": {
@@ -207,11 +207,11 @@
             "volume": "/mnt/pve/bx500/qbittorrent"
           },
           {
-            "path": "/mnt/bx1000/downloads",
+            "path": "/mnt/ssd/downloads",
             "volume": "/mnt/pve/bx1000/downloads"
           },
           {
-            "path": "/mnt/hd4000/downloads",
+            "path": "/mnt/hdd/downloads",
             "volume": "/mnt/pve/hd4000/downloads"
           }
         ],
