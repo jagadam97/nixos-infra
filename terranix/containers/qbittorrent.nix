@@ -6,8 +6,8 @@
 
   cores = 2;
   memory = 2048;
-  storage = "bx500";
-  template_file_storage = "bx500";
+  # storage = "local-lvm";  # Use default
+  # template_file_storage = "hd4000";  # Use default
 
   # Mount points
   # Config/state is persisted on bx500; downloads are on bx1000 and hd4000
@@ -18,11 +18,11 @@
     }
     {
       volume = "/mnt/pve/bx1000/downloads";
-      path = "/mnt/bx1000/downloads";
+      path = "/mnt/ssd/downloads";
     }
     {
       volume = "/mnt/pve/hd4000/downloads";
-      path = "/mnt/hd4000/downloads";
+      path = "/mnt/hdd/downloads";
     }
   ];
 
