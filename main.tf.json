@@ -72,6 +72,76 @@
         "unprivileged": true,
         "vm_id": 204
       },
+      "maintainarr": {
+        "cpu": {
+          "cores": 2
+        },
+        "device_passthrough": [],
+        "disk": {
+          "datastore_id": "bx500",
+          "size": 8
+        },
+        "features": {
+          "nesting": true
+        },
+        "initialization": {
+          "dns": {
+            "servers": [
+              "152.70.69.235",
+              "1.1.1.1",
+              "8.8.8.8"
+            ]
+          },
+          "hostname": "maintainarr",
+          "ip_config": [
+            {
+              "ipv4": {
+                "address": "192.168.4.211/24",
+                "gateway": "192.168.4.1"
+              }
+            }
+          ]
+        },
+        "memory": {
+          "dedicated": 2048
+        },
+        "mount_point": [
+          {
+            "path": "/config",
+            "volume": "/mnt/pve/bx500/maintainarr"
+          },
+          {
+            "path": "/mnt/ssd",
+            "volume": "/mnt/pve/ssd"
+          },
+          {
+            "path": "/mnt/hdd",
+            "volume": "/mnt/pve/hdd"
+          }
+        ],
+        "network_interface": {
+          "bridge": "vmbr0",
+          "enabled": true,
+          "name": "eth0"
+        },
+        "node_name": "donnager",
+        "operating_system": {
+          "template_file_id": "${proxmox_virtual_environment_download_file.maintainarr_template.id}",
+          "type": "nixos"
+        },
+        "start_on_boot": true,
+        "started": true,
+        "tags": [
+          "maintainarr",
+          "bazarr",
+          "radarr",
+          "sonarr",
+          "media",
+          "arr"
+        ],
+        "unprivileged": true,
+        "vm_id": 206
+      },
       "qbittorrent": {
         "cpu": {
           "cores": 2
@@ -148,6 +218,14 @@
         "node_name": "donnager",
         "overwrite": false,
         "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/influxdb-v2.7.12/influxdb-v2.7.12.tar.xz"
+      },
+      "maintainarr_template": {
+        "content_type": "vztmpl",
+        "datastore_id": "hd4000",
+        "file_name": "maintainarr-v1.5.6_6.0.4.10291_4.0.16.2944.tar.xz",
+        "node_name": "donnager",
+        "overwrite": false,
+        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/maintainarr-v1.5.6_6.0.4.10291_4.0.16.2944/maintainarr-v1.5.6_6.0.4.10291_4.0.16.2944.tar.xz"
       },
       "qbittorrent_template": {
         "content_type": "vztmpl",
