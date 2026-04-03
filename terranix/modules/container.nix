@@ -39,7 +39,7 @@ in
 
 {
   # Download template resource (stored on hd4000)
-  resource.proxmox_virtual_environment_download_file."${name}_template" = {
+  resource.proxmox_download_file."${name}_template" = {
     node_name = node_name;
     content_type = "vztmpl";
     datastore_id = template_file_storage;
@@ -55,7 +55,7 @@ in
 
     # Template
     operating_system = {
-      template_file_id = "\${proxmox_virtual_environment_download_file.${name}_template.id}";
+      template_file_id = "\${proxmox_download_file.${name}_template.id}";
       type = os_type;
     };
 
