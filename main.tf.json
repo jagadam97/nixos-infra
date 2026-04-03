@@ -138,11 +138,11 @@
           },
           {
             "path": "/mnt/ssd",
-            "volume": "/mnt/pve/ssd"
+            "volume": "/mnt/pve/bx1000"
           },
           {
             "path": "/mnt/hdd",
-            "volume": "/mnt/pve/hdd"
+            "volume": "/mnt/pve/hd4000"
           }
         ],
         "network_interface": {
