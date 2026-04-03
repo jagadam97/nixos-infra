@@ -8,6 +8,32 @@
     }
   },
   "resource": {
+    "proxmox_download_file": {
+      "influxdb_template": {
+        "content_type": "vztmpl",
+        "datastore_id": "hd4000",
+        "file_name": "influxdb-v2.7.12.tar.xz",
+        "node_name": "donnager",
+        "overwrite": false,
+        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/influxdb-v2.7.12/influxdb-v2.7.12.tar.xz"
+      },
+      "maintainarr_template": {
+        "content_type": "vztmpl",
+        "datastore_id": "hd4000",
+        "file_name": "maintainarr-v1.5.6_6.0.4.10291_4.0.16.2944.tar.xz",
+        "node_name": "donnager",
+        "overwrite": false,
+        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/maintainarr-v1.5.6_6.0.4.10291_4.0.16.2944/maintainarr-v1.5.6_6.0.4.10291_4.0.16.2944.tar.xz"
+      },
+      "qbittorrent_template": {
+        "content_type": "vztmpl",
+        "datastore_id": "bx500",
+        "file_name": "qbittorrent-v5.1.4.tar.xz",
+        "node_name": "donnager",
+        "overwrite": false,
+        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/qbittorrent-v5.1.4/qbittorrent-v5.1.4.tar.xz"
+      }
+    },
     "proxmox_virtual_environment_container": {
       "influxdb": {
         "cpu": {
@@ -59,7 +85,7 @@
         },
         "node_name": "donnager",
         "operating_system": {
-          "template_file_id": "${proxmox_virtual_environment_download_file.influxdb_template.id}",
+          "template_file_id": "${proxmox_download_file.influxdb_template.id}",
           "type": "nixos"
         },
         "start_on_boot": true,
@@ -126,7 +152,7 @@
         },
         "node_name": "donnager",
         "operating_system": {
-          "template_file_id": "${proxmox_virtual_environment_download_file.maintainarr_template.id}",
+          "template_file_id": "${proxmox_download_file.maintainarr_template.id}",
           "type": "nixos"
         },
         "start_on_boot": true,
@@ -196,7 +222,7 @@
         },
         "node_name": "donnager",
         "operating_system": {
-          "template_file_id": "${proxmox_virtual_environment_download_file.qbittorrent_template.id}",
+          "template_file_id": "${proxmox_download_file.qbittorrent_template.id}",
           "type": "nixos"
         },
         "start_on_boot": true,
@@ -208,32 +234,6 @@
         ],
         "unprivileged": true,
         "vm_id": 205
-      }
-    },
-    "proxmox_virtual_environment_download_file": {
-      "influxdb_template": {
-        "content_type": "vztmpl",
-        "datastore_id": "hd4000",
-        "file_name": "influxdb-v2.7.12.tar.xz",
-        "node_name": "donnager",
-        "overwrite": false,
-        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/influxdb-v2.7.12/influxdb-v2.7.12.tar.xz"
-      },
-      "maintainarr_template": {
-        "content_type": "vztmpl",
-        "datastore_id": "hd4000",
-        "file_name": "maintainarr-v1.5.6_6.0.4.10291_4.0.16.2944.tar.xz",
-        "node_name": "donnager",
-        "overwrite": false,
-        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/maintainarr-v1.5.6_6.0.4.10291_4.0.16.2944/maintainarr-v1.5.6_6.0.4.10291_4.0.16.2944.tar.xz"
-      },
-      "qbittorrent_template": {
-        "content_type": "vztmpl",
-        "datastore_id": "bx500",
-        "file_name": "qbittorrent-v5.1.4.tar.xz",
-        "node_name": "donnager",
-        "overwrite": false,
-        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/qbittorrent-v5.1.4/qbittorrent-v5.1.4.tar.xz"
       }
     }
   },
