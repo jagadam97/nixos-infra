@@ -6,8 +6,8 @@
 
   cores = 2;
   memory = 2048;
-  storage = "bx500";
-  template_file_storage = "hd4000";
+  # storage = "local-lvm";  # Use default
+  template_file_storage = "bx500";
 
   # Mount points
   # Config persisted on bx500; media storage on bx1000 (ssd) and hd4000 (hdd)
