@@ -6,6 +6,7 @@
 
   cores = 2;
   memory = 1536;
+  storage = "bx500";
 
   mount_points = [
     {
