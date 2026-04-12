@@ -6,7 +6,7 @@
 
   cores = 2;
   memory = 1536;
-  template_storage = "bx500";
+  template_file_storage = "bx500";
 
   mount_points = [
     {
