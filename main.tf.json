@@ -28,10 +28,10 @@
       "postgres_template": {
         "content_type": "vztmpl",
         "datastore_id": "hd4000",
-        "file_name": "postgres-v17.4.tar.xz",
+        "file_name": "postgres-v17.9.tar.xz",
         "node_name": "donnager",
         "overwrite": false,
-        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/postgres-v17.4/postgres-v17.4.tar.xz"
+        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/postgres-v17.9/postgres-v17.9.tar.xz"
       },
       "qbittorrent_template": {
         "content_type": "vztmpl",
