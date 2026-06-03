@@ -35,7 +35,7 @@
       },
       "qbittorrent_template": {
         "content_type": "vztmpl",
-        "datastore_id": "hd4000",
+        "datastore_id": "bx500",
         "file_name": "qbittorrent-v5.2.1.tar.xz",
         "node_name": "donnager",
         "overwrite": false,
@@ -242,7 +242,7 @@
         },
         "device_passthrough": [],
         "disk": {
-          "datastore_id": "bx500",
+          "datastore_id": "local-lvm",
           "size": 8
         },
         "features": {
