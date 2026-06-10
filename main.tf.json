@@ -9,6 +9,14 @@
   },
   "resource": {
     "proxmox_download_file": {
+      "influxdb3_template": {
+        "content_type": "vztmpl",
+        "datastore_id": "hd4000",
+        "file_name": "influxdb3-v3.8.3.tar.xz",
+        "node_name": "donnager",
+        "overwrite": false,
+        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/influxdb3-v3.8.3/influxdb3-v3.8.3.tar.xz"
+      },
       "influxdb_template": {
         "content_type": "vztmpl",
         "datastore_id": "hd4000",
@@ -105,6 +113,69 @@
         ],
         "unprivileged": true,
         "vm_id": 204
+      },
+      "influxdb3": {
+        "cpu": {
+          "cores": 1
+        },
+        "device_passthrough": [],
+        "disk": {
+          "datastore_id": "local-lvm",
+          "size": 4
+        },
+        "features": {
+          "nesting": true
+        },
+        "initialization": {
+          "dns": {
+            "servers": [
+              "152.70.69.235",
+              "1.1.1.1",
+              "8.8.8.8"
+            ]
+          },
+          "hostname": "influxdb3",
+          "ip_config": [
+            {
+              "ipv4": {
+                "address": "192.168.4.249/24",
+                "gateway": "192.168.4.1"
+              }
+            }
+          ]
+        },
+        "memory": {
+          "dedicated": 768
+        },
+        "mount_point": [
+          {
+            "path": "/var/lib/influxdb3",
+            "volume": "/mnt/pve/bx500/influxdb3/data"
+          },
+          {
+            "path": "/etc/influxdb3",
+            "volume": "/mnt/pve/bx500/influxdb3/config"
+          }
+        ],
+        "network_interface": {
+          "bridge": "vmbr0",
+          "enabled": true,
+          "name": "eth0"
+        },
+        "node_name": "donnager",
+        "operating_system": {
+          "template_file_id": "${proxmox_download_file.influxdb3_template.id}",
+          "type": "nixos"
+        },
+        "start_on_boot": true,
+        "started": true,
+        "tags": [
+          "influxdb3",
+          "monitoring",
+          "database"
+        ],
+        "unprivileged": true,
+        "vm_id": 206
       },
       "maintainarr": {
         "cpu": {
