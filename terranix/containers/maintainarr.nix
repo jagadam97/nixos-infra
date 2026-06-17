@@ -5,7 +5,7 @@
   gateway = "192.168.4.1";
 
   cores = 2;
-  memory = 1230;
+  memory = 2048;
 
   mount_points = [
     {
