@@ -20,10 +20,10 @@
       "maintainarr_template": {
         "content_type": "vztmpl",
         "datastore_id": "hd4000",
-        "file_name": "maintainarr-v1.5.6-6.2.1.10461-4.0.17.2952.tar.xz",
+        "file_name": "maintainarr-v1.5.6-6.2.1.10461-4.0.17.2952-2.4.0.5397.tar.xz",
         "node_name": "donnager",
         "overwrite": false,
-        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/maintainarr-v1.5.6-6.2.1.10461-4.0.17.2952/maintainarr-v1.5.6-6.2.1.10461-4.0.17.2952.tar.xz"
+        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/maintainarr-v1.5.6-6.2.1.10461-4.0.17.2952-2.4.0.5397/maintainarr-v1.5.6-6.2.1.10461-4.0.17.2952-2.4.0.5397.tar.xz"
       },
       "postgres_template": {
         "content_type": "vztmpl",
