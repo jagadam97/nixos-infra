@@ -20,10 +20,10 @@
       "maintainarr_template": {
         "content_type": "vztmpl",
         "datastore_id": "hd4000",
-        "file_name": "maintainarr-v1.5.6-6.2.1.10461-4.0.17.2952-2.4.0.5397.tar.xz",
+        "file_name": "maintainarr-v1.5.6-6.2.1.10461-4.0.18.2971-2.4.0.5397.tar.xz",
         "node_name": "donnager",
         "overwrite": false,
-        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/maintainarr-v1.5.6-6.2.1.10461-4.0.17.2952-2.4.0.5397/maintainarr-v1.5.6-6.2.1.10461-4.0.17.2952-2.4.0.5397.tar.xz"
+        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/maintainarr-v1.5.6-6.2.1.10461-4.0.18.2971-2.4.0.5397/maintainarr-v1.5.6-6.2.1.10461-4.0.18.2971-2.4.0.5397.tar.xz"
       },
       "postgres_template": {
         "content_type": "vztmpl",
@@ -36,10 +36,10 @@
       "qbittorrent_template": {
         "content_type": "vztmpl",
         "datastore_id": "bx500",
-        "file_name": "qbittorrent-v5.2.1.tar.xz",
+        "file_name": "qbittorrent-v5.2.2.tar.xz",
         "node_name": "donnager",
         "overwrite": false,
-        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/qbittorrent-v5.2.1/qbittorrent-v5.2.1.tar.xz"
+        "url": "https://github.com/jagadam97/nixos-vm-builder/releases/download/qbittorrent-v5.2.2/qbittorrent-v5.2.2.tar.xz"
       }
     },
     "proxmox_virtual_environment_container": {
