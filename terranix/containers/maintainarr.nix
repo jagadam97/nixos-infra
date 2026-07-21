@@ -20,6 +20,10 @@
       volume = "/mnt/pve/hd4000";
       path = "/mnt/hdd";
     }
+    {
+      volume = "/mnt/pve/hd4001";
+      path = "/mnt/hdd1";
+    }
   ];
 
   tags = [
