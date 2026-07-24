@@ -17,7 +17,7 @@
   ];
 
   # Custom values (defaults: cores=1, memory=512, disk_size=8)
-  memory = 768;
+  memory = 2048;
   disk_size = 4;
   # storage = "bx500";
   tags = [ "influxdb" "monitoring" "database" ];
