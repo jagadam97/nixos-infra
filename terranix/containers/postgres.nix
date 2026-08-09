@@ -6,7 +6,7 @@
 
   cores = 2;
   memory = 1024;
-  disk_size = 8;
+  # disk_size = 8;
 
   # Attached data disk — mount your dedicated disk on the Proxmox host
   # at /mnt/pve/bx500/postgres/data before deploying

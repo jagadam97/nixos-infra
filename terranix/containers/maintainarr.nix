@@ -6,8 +6,8 @@
 
   cores = 2;
   memory = 2048;
-  template_file_storage = "bx500";
-  storage = "bx500";
+  # template_file_storage = "bx500";
+  # storage = "bx500";
   mount_points = [
     {
       volume = "/mnt/pve/bx500/maintainarr";
